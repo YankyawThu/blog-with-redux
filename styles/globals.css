@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-rgb: 30, 30, 30;
+  --background-deep-rgb: 0, 0, 0;
+  --color-rgb: 100, 100, 100;
+  --color-deep-rgb: 220, 220, 220;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-rgb: 30, 30, 30;
+    --background-deep-rgb: 0, 0, 0;
+    --color-rgb: 100, 100, 100;
+    --color-deep-rgb: 220, 220, 220;
+  }
+  body {
+    background: rgb(var(--background-rgb));
+    color: rgb(var(--color-deep-rgb));
+  }
+  .layout {
+    background: rgb(var(--background-deep-rgb));
+  }
+  .main {
+    background: rgb(var(--background-rgb));
+  }
+  .cus-layout {
+    background: rgb(var(--background-rgb));
+  }
+  .nav {
+    background: rgb(var(--background-rgb));
+  }
+  .footer {
+    background: rgb(var(--background-rgb));
+  }
+  .icon-dark {
+    color: rgb(var(--color-rgb));
+  }
+  .icon-bg {
+    background: rgb(var(--background-deep-rgb));
+  }
+  .date {
+    background: rgb(var(--background-deep-rgb));
+  }
+  .filter {
+    background: rgb(var(--background-deep-rgb));
+  }
+  .filter-icon {
+    background: rgb(var(--background-rgb));
+  }
+  .alert-box {
+    background: rgb(var(--background-deep-rgb));
+  }
+}
+
+body {
+  font-family: 'Helvetica';
+}
+
+.home-bg {
+  background-image: url('/assets/images/home-bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.icon-lg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon-xs {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.start-btn {
+  transition: 2s;
+}
+
+.loading {
+  animation: spin 2s linear infinite; 
+}
+
+@keyframes spin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.alert {
+  opacity: 0;
+  animation: alert .3s linear forwards;
+}
+
+@keyframes alert {
+  0% {transform: translateY(-100px) scaleY(0.9); opacity: 0;}
+  /* 5% {opacity: .7;} */
+  /* 50% {transform: translateY(-100px) scaleY(1); opacity: 0.5;} */
+  /* 65% {transform: translateY(-17px) scaleY(.9); opacity: 1;}
+  75% {transform: translateY(-22px) scaleY(.9); opacity: 1;} */
+  100% {transform: translateY(0px) scaleY(1); opacity: 1;}
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
