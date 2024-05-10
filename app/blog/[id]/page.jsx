@@ -10,26 +10,17 @@ import { PiCopySimple } from 'react-icons/pi'
 import Link from 'next/link'
 import {useState, useEffect} from 'react'
 import Alert from '@components/Alert'
+import { useGetBlogQuery, useAddLikeMutation } from '@api/blogSlice'
 
 function Detail({params}) {
-    const [blog, setBlog] = useState({})
+    const { data: blog = {}} = useGetBlogQuery(params.id)
+    const [updateLike, { isSuccess }] = useAddLikeMutation()
+
     const [like, setLike] = useState(false)
     const [alertInfo, setAlertInfo] = useState({
         on: false,
         msg: ''
     })
-
-    useEffect(() => {
-        FetchBlog()
-    }, [])
-
-    async function FetchBlog() {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${params.id}`)
-        if(response.ok) {
-            const res = await response.json()
-            setBlog(res)
-        }
-    }
 
     function Copy() {
         navigator.clipboard.writeText(location.href);
@@ -38,9 +29,9 @@ function Detail({params}) {
 
     async function GiveLike() {
         if(!like) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${params.id}/like`)
-            if(response.ok) {
-                setBlog({...blog, likes: blog.likes+1})
+            await updateLike({ id: params.id })
+            if(isSuccess) {
+                // setBlog({...blog, likes: blog.likes+1})
                 PlayAlert('You liked it')
                 setLike(true)
             }

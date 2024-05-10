@@ -6,33 +6,29 @@ import Filter from '@components/Filter.jsx'
 import Blog from '@components/Blog.jsx'
 import CustomLayout from '@components/Layout.jsx'
 import {useEffect, useState} from 'react'
+import { useGetBlogsQuery } from '@api/blogSlice'
+import { useSelector } from 'react-redux'
+import { selectAllBlogs } from '@api/blogReducer'
 
 function Blogs() {
-    const [data, setData] = useState([])
+    const {
+        data: blogs = [],
+        isLoading,
+        isSuccess,
+        isError,
+        error,
+        refetch
+    } = useGetBlogsQuery() // use from blog slice
 
-    useEffect(() => {
-        FetchBlogs()
-    }, [])
-
-    async function FetchBlogs() {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`)
-        if(response.ok) {
-            const res = await response.json()
-            setData(res)
-        }
-    }
+    // const blogs = useSelector(state => state.blogs) // use from blog reducer
 
     async function searchBlog(e) {
         let keyword = e.target.value
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs?keyword=${keyword}`)
-        if(response.ok) {
-            let res = await response.json()
-            setData(res)
-        }
+        // blogs = blogs.filter(blog => blog.title == keyword)
     }
 
     function Lists() {
-        let lists = data.map(blog => (
+        let lists = blogs.map(blog => (
             <Blog key={blog.id} blog={blog} />
         ))
         return (
@@ -42,10 +38,6 @@ function Blogs() {
         )
     }
 
-    function refresh() {
-        FetchBlogs()
-    }
-
     return (
         <>
             <CustomLayout>
@@ -53,7 +45,7 @@ function Blogs() {
                 <div className="text-2xl font-bold px-5 pt-2">Blogs</div>
                 <Filter search={searchBlog} />
                 <Lists />
-                <Footer refresh={refresh}/>
+                <Footer refresh={refetch}/>
             </CustomLayout>
         </>
     )
